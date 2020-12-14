@@ -16,9 +16,13 @@ import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = (
+    environ.Path(__file__) - 2
+    # (marco-django/marco/settings.py - 2 = marco-django/)
+)
 
 env = environ.Env()
-environ.Env.read_env()
+env.read_env(str(ROOT_DIR.path('.env')))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -79,7 +83,7 @@ WSGI_APPLICATION = 'marco.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': env.db('DATABASE_URL')
 }
 
 
